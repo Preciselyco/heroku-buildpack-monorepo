@@ -16,4 +16,7 @@ Enter the Monorepo buildpack, which is a copy of [heroku-buildpack-multi-procfil
 
 # Authors
 
-Andrew Gwozdziewycz <apg@heroku.com> and Cyril David <cyx@heroku.com> and now Lincoln Stoll <lstoll@heroku.com>
+* Andrew Gwozdziewycz <apg@heroku.com> 
+* Cyril David <cyx@heroku.com>
+* Lincoln Stoll <lstoll@heroku.com>
+* Stefan Nyman <stefan@precisely.se>
