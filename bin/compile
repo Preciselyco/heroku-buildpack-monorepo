@@ -18,6 +18,7 @@ CACHE_DIR="$2"
 ENV_DIR="$3"
 STAGE_DIR="$(mktemp -d)"
 
+# Make sure the APP_BASE env var is set
 if [ ! -f "${ENV_DIR}/APP_BASE" ]; then
     echoi "APP_BASE was not set. Aborting"
     exit 1
@@ -25,17 +26,27 @@ fi
 
 APP_BASE="$(cat "${ENV_DIR}/APP_BASE")"
 
+# Move build sources into staging dir
 mv "${BUILD_DIR}/${APP_BASE}/"* "${STAGE_DIR}/"
 check_fail $? "FAILED to copy ${APP_BASE} into staging dir"
 
+# Check for server dir in build dir and move it into staging dir
 if [ -d "${BUILD_DIR}/server" ]; then
     mv "${BUILD_DIR}/server" "${STAGE_DIR}/"
     check_fail $? "FAILED to copy server dir into staging dir"
 fi
 
+# Check for compile dir in build dir and move it into staging dir.
+if [ -d "${BUILD_DIR}/compile" ]; then
+    mv "${BUILD_DIR}/compile" "${STAGE_DIR}/"
+    check_fail $? "FAILED to copy compile dir into staging dir"
+fi
+
+# Clean up build dir by removing it
 rm -rf "${BUILD_DIR}"
 check_fail $? "FAILED to remove build dir"
 
+# Move the staging dir to build dir
 mv "${STAGE_DIR}" "${BUILD_DIR}"
 check_fail $? "FAILED to move stage dir contents to build dir"
 
